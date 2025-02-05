@@ -1,0 +1,29 @@
+name: Secure Deployment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH Commands
+        uses: appleboy/ssh-action@v1.3.1
+        with:
+          host: 171.127.57.21
+          username: github-runner
+          port: 22
+          key: ${{ b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+QyNTUxOQAAACDIX+bpbp2p5buTvsXfLBm9Vz8y//krVCcxroHDRy4sEQAAAKgYkZblGJGW
+5QAAAAtzc2gtZWQyNTUxOQAAACDIX+bpbp2p5buTvsXfLBm9Vz8y//krVCcxroHDRy4sEQ
+AAAECaHFCUKqPCwzGWpD2fTVKZCt1gv0x6kCPiwIwh/I5p6Mhf5ulunanlu5O+xd8sGb1X
+PzL/+StUJzGugcNHLiwRAAAAH2dpdGh1Yi1ydW5uZXJAY29kZXNwYWNlcy0xZTBkYjkBAg
+MEBQY= }}
+          script: |
+            echo "🛠️ Début du déploiement"
+            sudo apt update -qy
+            echo "✅ Mise à jour effectuée"
+            sudo docker ps 2>/dev/null || echo "ℹ️ Pas de Docker installé"
+            echo "🏁 Déploiement terminé avec succès"
+            df -h | grep -v snap
